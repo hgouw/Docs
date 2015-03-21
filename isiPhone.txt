@@ -1,0 +1,63 @@
+<asp:TextBox ID="textarea" TextMode="MultiLine" Rows="20" Columns="60" runat="server" Visible="false"></asp:TextBox>
+<telerik:RadEditor ID="editor" runat="server"></telerik:RadEditor>
+
+public string EditorContent
+{
+    get
+    {
+        if (isiPhone())
+        {
+            return textarea.Text;
+        }
+        else
+        {
+            return editor.Content;
+        }
+    }
+    set
+    {
+        if (isiPhone())
+        {
+            textarea.Text = value;
+        }
+        else
+        { 
+            editor.Content = value;
+        }
+    }
+}
+
+private bool isiPhone()
+{
+    string userAgent = Request.Headers["User-Agent"];
+    if (!string.IsNullOrEmpty(userAgent))
+    {
+        return userAgent.ToLowerInvariant().Contains("iphone");
+    }
+    else
+    {
+        return false;
+    }
+}
+
+private void SetControlsVisibility()
+{
+    textarea.Visible = isiPhone();
+    editor.Visible = !isiPhone();
+}
+
+protected void Page_Load(object sender, EventArgs e)
+{
+    if (!IsPostBack)
+    {
+        SetControlsVisibility();
+        //set initial content
+        EditorContent = "initial content";
+    }
+    else
+    {
+        //postback - Update content in database
+        string content = EditorContent;
+        //...code that updates DB
+    }
+}
