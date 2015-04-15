@@ -1,0 +1,4 @@
+Internet Explorer v10.0 and above
+Mozilla Firefox v25.0 and above
+Google Chrome v24.0 and above
+Safari v6.0 and above
