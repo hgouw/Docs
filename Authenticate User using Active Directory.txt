@@ -1,0 +1,28 @@
+Let us now create a new Console Application using either SharpDevelop or Visual Studio.
+After adding a reference to System.DirectoryServices.AccountManagement, add the following statement near the top of your Program.cs file:
+using System.DirectoryServices.AccountManagement;
+
+Next, remove any code in Main() and add a simple prompt for the username and password to authenticate against Active Directory:
+
+// prompt for username
+Console.Write("Username: ");
+string username = Console.ReadLine();
+// prompt for password
+Console.Write("Password: ");
+string password = Console.ReadLine();
+
+For the authentication part, we can use a simple method described here.
+After obtaining a reference to the domain using the PrincipalContext class (specifying the domain as a parameter), we simply use the ValidateCredentials() method to perform the authentication.
+This gives us a boolean value indicating whether the authentication was successful or not.
+// authenticate
+using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, "RANCH"))
+{
+    bool authenticated = pc.ValidateCredentials(username, password);
+    if (authenticated)
+        Console.WriteLine("Authenticated");
+    else
+        Console.WriteLine("Get lost.");
+}
+
+At this point, we need only add a simple statement to wait for user input before letting the application terminate:
+Console.ReadLine();
