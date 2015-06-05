@@ -1,0 +1,5 @@
+using System.IO;
+using Clarius.Common;
+var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+var filePath = Path.Combine(desktopPath, "PervasiveQueryToolResult.csv");
+DataSetHelper.DataTableToCSV(table, filePath, true);
